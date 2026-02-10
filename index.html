@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Іспит Національної Поліції України</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .card {
+            background-color: #1e293b;
+            border-left: 4px solid #3b82f6;
+        }
+        input[type="radio"]:checked + label {
+            color: #3b82f6;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-10 border-b border-blue-900 pb-6">
+            <h1 class="text-3xl font-bold uppercase tracking-widest text-blue-400">Національна Поліція України</h1>
+            <p class="text-gray-400 mt-2">Електронна система тестування кадрів</p>
+        </div>
+
+        <div id="setup-screen" class="card p-6 rounded-lg shadow-xl mb-6">
+            <h2 class="text-xl mb-4 italic text-blue-200 underline">Дані курсанта/офіцера:</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" id="user-name" placeholder="Прізвище та Ім'я" class="bg-slate-800 border border-slate-700 p-2 rounded focus:outline-none focus:border-blue-500">
+                <input type="text" id="user-rank" placeholder="Поточне звання" class="bg-slate-800 border border-slate-700 p-2 rounded focus:outline-none focus:border-blue-500">
+            </div>
+            <button onclick="startExam()" class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded transition duration-200 uppercase tracking-widest">Розпочати іспит</button>
+        </div>
+
+        <div id="exam-container" class="hidden">
+            <form id="quiz-form">
+                <!-- Блок 1 -->
+                <div class="card p-6 rounded-lg mb-6">
+                    <h3 class="text-lg font-semibold text-blue-300 mb-4">Блок 1: Законодавство та Статут</h3>
+                    
+                    <div class="mb-6">
+                        <p class="mb-3 font-medium">1. Що таке субординація?</p>
+                        <div class="space-y-2">
+                            <div><input type="radio" name="q1" id="q1a" value="1"> <label for="q1a" class="ml-2">Система суворого підпорядкування нижчих за посадою вищим</label></div>
+                            <div><input type="radio" name="q1" id="q1b" value="0"> <label for="q1b" class="ml-2">Вільне спілкування між колегами незалежно від звання</label></div>
+                            <div><input type="radio" name="q1" id="q1c" value="0"> <label for="q1c" class="ml-2">Правила оформлення протоколів</label></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <p class="mb-3 font-medium">2. Коли поліцейський має право відмовитися від виконання наказу?</p>
+                        <div class="space-y-2">
+                            <div><input type="radio" name="q2" id="q2a" value="0"> <label for="q2a" class="ml-2">Якщо він втомився</label></div>
+                            <div><input type="radio" name="q2" id="q2b" value="1"> <label for="q2b" class="ml-2">Якщо наказ є явно злочинним</label></div>
+                            <div><input type="radio" name="q2" id="q2c" value="0"> <label for="q2c" class="ml-2">Ніколи, наказ обговорюється після виконання</label></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Блок 2 -->
+                <div class="card p-6 rounded-lg mb-6">
+                    <h3 class="text-lg font-semibold text-blue-300 mb-4">Блок 2: Застосування сили (Force Continuum)</h3>
+                    
+                    <div class="mb-6">
+                        <p class="mb-3 font-medium">3. Яка перша стадія застосування сили?</p>
+                        <div class="space-y-2">
+                            <div><input type="radio" name="q3" id="q3a" value="0"> <label for="q3a" class="ml-2">Словесне попередження</label></div>
+                            <div><input type="radio" name="q3" id="q3b" value="1"> <label for="q3b" class="ml-2">Присутність поліцейського (психологічний вплив)</label></div>
+                            <div><input type="radio" name="q3" id="q3c" value="0"> <label for="q3c" class="ml-2">Використання кайданок</label></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <p class="mb-3 font-medium">4. Скільки всього стадій застосування сили визначено протоколом?</p>
+                        <div class="space-y-2">
+                            <div><input type="radio" name="q4" id="q4a" value="0"> <label for="q4a" class="ml-2">4 стадії</label></div>
+                            <div><input type="radio" name="q4" id="q4b" value="0"> <label for="q4b" class="ml-2">5 стадій</label></div>
+                            <div><input type="radio" name="q4" id="q4c" value="1"> <label for="q4c" class="ml-2">6 стадій</label></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Блок 3 -->
+                <div class="card p-6 rounded-lg mb-6">
+                    <h3 class="text-lg font-semibold text-blue-300 mb-4">Блок 3: Тен-коди та рація</h3>
+                    
+                    <div class="mb-6">
+                        <p class="mb-3 font-medium">5. Що означає код 10-4?</p>
+                        <div class="space-y-2">
+                            <div><input type="radio" name="q5" id="q5a" value="1"> <label for="q5a" class="ml-2">Прийнято / Ствердно</label></div>
+                            <div><input type="radio" name="q5" id="q5b" value="0"> <label for="q5b" class="ml-2">Відміна / Негативно</label></div>
+                            <div><input type="radio" name="q5" id="q5c" value="0"> <label for="q5c" class="ml-2">Потрібна допомога</label></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <p class="mb-3 font-medium">6. Що означає код 10-20?</p>
+                        <div class="space-y-2">
+                            <div><input type="radio" name="q6" id="q6a" value="0"> <label for="q6a" class="ml-2">Початок патрулювання</label></div>
+                            <div><input type="radio" name="q6" id="q6b" value="1"> <label for="q6b" class="ml-2">Повідомте ваше місцезнаходження (локацію)</label></div>
+                            <div><input type="radio" name="q6" id="q6c" value="0"> <label for="q6c" class="ml-2">Переслідування порушника</label></div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" onclick="submitExam()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-lg shadow-lg uppercase tracking-widest mb-10">Завершити тест та отримати результат</button>
+            </form>
+        </div>
+
+        <div id="result-screen" class="hidden card p-8 rounded-lg text-center shadow-2xl border-green-500">
+            <h2 class="text-3xl font-bold text-green-400 mb-4">ІСПИТ ЗАВЕРШЕНО</h2>
+            <div class="text-left bg-slate-800 p-6 rounded mb-6">
+                <p class="text-lg">Курсант: <span id="res-name" class="text-blue-300"></span></p>
+                <p class="text-lg">Звання: <span id="res-rank" class="text-blue-300"></span></p>
+                <hr class="my-4 border-slate-600">
+                <p class="text-2xl font-bold">Ваш бал: <span id="score" class="text-yellow-400"></span> / 6</p>
+                <p id="status-text" class="text-xl mt-4 font-bold"></p>
+            </div>
+            <button onclick="location.reload()" class="bg-blue-600 px-6 py-2 rounded font-bold uppercase">Спробувати ще раз</button>
+        </div>
+    </div>
+
+    <script>
+        function startExam() {
+            const name = document.getElementById('user-name').value;
+            const rank = document.getElementById('user-rank').value;
+
+            if(!name || !rank) {
+                alert("Будь ласка, введіть Прізвище та Поточне звання!");
+                return;
+            }
+
+            document.getElementById('setup-screen').classList.add('hidden');
+            document.getElementById('exam-container').classList.remove('hidden');
+            window.scrollTo(0,0);
+        }
+
+        function submitExam() {
+            const form = document.getElementById('quiz-form');
+            const data = new FormData(form);
+            let score = 0;
+            let total = 6;
+
+            for (let [key, value] of data.entries()) {
+                score += parseInt(value);
+            }
+
+            document.getElementById('res-name').innerText = document.getElementById('user-name').value;
+            document.getElementById('res-rank').innerText = document.getElementById('user-rank').value;
+            document.getElementById('score').innerText = score;
+
+            const statusText = document.getElementById('status-text');
+            if(score >= 5) {
+                statusText.innerText = "СТАТУС: СКЛАДЕНО";
+                statusText.className = "text-xl mt-4 font-bold text-green-400";
+            } else {
+                statusText.innerText = "СТАТУС: НЕ СКЛАДЕНО (Необхідно мінімум 5 балів)";
+                statusText.className = "text-xl mt-4 font-bold text-red-400";
+            }
+
+            document.getElementById('exam-container').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+            window.scrollTo(0,0);
+        }
+    </script>
+</body>
+</html>
