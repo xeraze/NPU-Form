@@ -158,7 +158,7 @@
         <div id="success-screen" class="hidden glass p-10 rounded-2xl text-center shadow-2xl">
             <div class="text-green-500 text-6xl mb-4">✔</div>
             <h2 class="text-2xl font-bold mb-2">ВІДПОВІДІ ВІДПРАВЛЕНО!</h2>
-            <p class="text-slate-400">Ваші відповіді успішно передані до бази даних ГУНП. Очікуйте на вердікт Керівництва.</p>
+            <p class="text-slate-400">Ваші відповіді успішно передані до бази даних ГУНП. Очікуйте на вердикт Керівництва.</p>
             <button onclick="location.reload()" class="mt-6 text-blue-400 underline">Повернутися</button>
         </div>
     </div>
@@ -166,9 +166,19 @@
     <script>
         const WEBHOOK_URL = "https://discord.com/api/webhooks/1470858864181252168/wpR2HFrj8k7Twma_tQJX3ggXLE9H3BdKAk6-5AWpGPb7VZmH_mal73Jh-wc4UQhSZ6EA";
 
+        // КЛЮЧ ПРАВИЛЬНИХ ВІДПОВІДЕЙ (для тесту)
+        const correctAnswers = {
+            q1: "A) Легкові патрульні авто",
+            q2: "A) Вони мають розфарбування та маячки",
+            q3: "B) Розпочати переслідування та передати інформацію диспетчеру",
+            q4: "B) Ні",
+            q5: "B) Використовувати маячки, координувати дії з іншими екіпажами",
+            q6: "B) Коли ввімкнені проблискові маячки та сирена, і є службова необхідність"
+        };
+
         function startQuiz() {
-            const name = document.getElementById('user-name').value;
-            const rank = document.getElementById('user-rank').value;
+            const name = document.getElementById('user-name').value.trim();
+            const rank = document.getElementById('user-rank').value.trim();
             if(!name || !rank) {
                 alert("Заповніть ваші дані!");
                 return;
@@ -190,15 +200,22 @@
             
             let messageContent = `**👮 НОВИЙ ІСПИТ НПУ: ${name} (${rank})**\n\n`;
             
-            // Формуємо текст для Discord
-            messageContent += "**📊 ТЕСТОВІ ВІДПОВІДІ:**\n";
+            // --- Перевірка тестів ---
+            messageContent += "**📊 ТЕСТОВІ ВІДПОВІДІ (Авто-перевірка):**\n";
+            let score = 0;
             for(let i=1; i<=6; i++) {
-                messageContent += `Q${i}: ${formData.get('q'+i)}\n`;
+                const userAns = formData.get('q'+i);
+                const isCorrect = userAns === correctAnswers['q'+i];
+                if(isCorrect) score++;
+                
+                messageContent += `Q${i}: ${userAns} ${isCorrect ? "✅" : `❌ (Прав: ${correctAnswers['q'+i]})`}\n`;
             }
+            messageContent += `\n**🏆 ЗАГАЛЬНИЙ БАЛ: ${score}/6**\n`;
 
-            messageContent += "\n**📝 ВІДКРИТІ ПИТАННЯ:**\n";
+            // --- Відкриті питання ---
+            messageContent += "\n**📝 ВІДКРИТІ ПИТАННЯ (Потребують перевірки):**\n";
             for(let i=7; i<=14; i++) {
-                if(i === 12) continue; // Ми пропустили 12 у твоєму списку
+                if(i === 12) continue; 
                 messageContent += `*Питання ${i}:* ${formData.get('q'+i)}\n`;
             }
 
@@ -221,12 +238,12 @@
                     document.getElementById('quiz-section').classList.add('hidden');
                     document.getElementById('success-screen').classList.remove('hidden');
                 } else {
-                    alert("Помилка відправки в Discord. Перевірте з'єднання.");
+                    alert("Помилка відправки в Discord.");
                     btn.innerText = "ВІДПРАВИТИ РЕЗУЛЬТАТИ КЕРІВНИЦТВУ";
                     btn.disabled = false;
                 }
             } catch (error) {
-                alert("Помилка сервера. Спробуйте пізніше.");
+                alert("Помилка сервера.");
                 btn.innerText = "ВІДПРАВИТИ РЕЗУЛЬТАТИ КЕРІВНИЦТВУ";
                 btn.disabled = false;
             }
