@@ -19,13 +19,11 @@
 <body class="p-4 md:p-10">
 
     <div class="max-w-4xl mx-auto">
-        <!-- Header -->
         <div class="text-center mb-10">
             <h1 class="text-3xl font-bold text-blue-500 uppercase tracking-tighter italic">Тестування від Академії НПУ</h1>
             <p class="text-slate-400">Головне Управління Національної Поліції у Херсонській області</p>
         </div>
 
-        <!-- Login Section -->
         <div id="login-section" class="glass p-8 rounded-2xl shadow-2xl max-w-lg mx-auto">
             <h2 class="text-xl font-semibold mb-6 text-center">Авторизація співробітника</h2>
             <div class="space-y-4">
@@ -41,7 +39,6 @@
             </div>
         </div>
 
-        <!-- Quiz Section -->
         <div id="quiz-section" class="hidden space-y-8">
             <form id="npu-form" class="glass p-6 md:p-10 rounded-2xl shadow-2xl">
                 
@@ -154,7 +151,6 @@
             </form>
         </div>
 
-        <!-- Success Message -->
         <div id="success-screen" class="hidden glass p-10 rounded-2xl text-center shadow-2xl">
             <div class="text-green-500 text-6xl mb-4">✔</div>
             <h2 class="text-2xl font-bold mb-2">ВІДПОВІДІ ВІДПРАВЛЕНО!</h2>
@@ -164,9 +160,8 @@
     </div>
 
     <script>
-        const WEBHOOK_URL = "https://discord.com/api/webhooks/1470858864181252168/wpR2HFrj8k7Twma_tQJX3ggXLE9H3BdKAk6-5AWpGPb7VZmH_mal73Jh-wc4UQhSZ6EA";
+        const WEBHOOK_URL = "https://discord.com/api/webhooks/1500382119954743406/v-wzUl4j4pf29_rE3xzipEeCnUrelI7HNFQ8jxtAn099IKYja3In0kuKG7wm0GGLFdO4";
 
-        // КЛЮЧ ПРАВИЛЬНИХ ВІДПОВІДЕЙ (для тесту)
         const correctAnswers = {
             q1: "A) Легкові патрульні авто",
             q2: "A) Вони мають розфарбування та маячки",
@@ -200,7 +195,6 @@
             
             let messageContent = `**👮 НОВИЙ ІСПИТ НПУ: ${name} (${rank})**\n\n`;
             
-            // --- Перевірка тестів ---
             messageContent += "**📊 ТЕСТОВІ ВІДПОВІДІ (Авто-перевірка):**\n";
             let score = 0;
             for(let i=1; i<=6; i++) {
@@ -212,7 +206,6 @@
             }
             messageContent += `\n**🏆 ЗАГАЛЬНИЙ БАЛ: ${score}/6**\n`;
 
-            // --- Відкриті питання ---
             messageContent += "\n**📝 ВІДКРИТІ ПИТАННЯ (Потребують перевірки):**\n";
             for(let i=7; i<=14; i++) {
                 if(i === 12) continue; 
